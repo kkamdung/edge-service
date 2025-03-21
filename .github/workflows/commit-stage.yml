@@ -43,10 +43,11 @@ jobs:
       - name: Install tools
         uses: alexellis/arkade-get@master
         with:
+          kustomize: latest
           kubeconform: latest
       - name: Validate kubernetes manifests
         run: |
-          kubeconform --strict --verbose k8s
+          kustomize build k8s | kubeconform --strict --verbose -
   package:
     name: Package and Publish
     if: ${{ github.ref == 'refs/heads/master' }}
