@@ -20,6 +20,12 @@ spring:
           max-idle-time: 15s
           max-life-time: 60s
       default-filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter:
+              requested-tokens: 1
+              replenish-rate: 10
+              burst-capacity: 20
         - name: Retry
           args:
             retries: 3
