@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.core.oidc.StandardClaimNames;
 import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
@@ -19,6 +21,9 @@ class UserControllerTests {
 
     @Autowired
     private WebTestClient webClient;
+
+    @MockitoBean
+    private ReactiveClientRegistrationRepository clientRegistrationRepository;
 
     @Test
     void whenNotAuthenticatedThen401() {
