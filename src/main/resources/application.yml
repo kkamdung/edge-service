@@ -108,6 +108,10 @@ resilience4j:
       default:
         timeout-duration: 5s
 
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+
 management:
   endpoints:
     web:
