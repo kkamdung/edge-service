@@ -21,6 +21,18 @@ spring:
               type: elastic
               max-idle-time: 15s
               max-life-time: 60s
+          default-filters:
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                series: SERVER_ERROR
+                exceptions: java.io.IOException, java.util.concurrent.TimeoutException
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+                  factor: 2
+                  basedOnPreviousValue: false
           routes:
             - id: catalog-route
               uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/books
@@ -30,3 +42,4 @@ spring:
               uri: ${ORDER_SERVICE_URL:http://localhost:9002}/orders
               predicates:
                 - Path=/orders/**
+
