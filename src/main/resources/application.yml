@@ -114,3 +114,14 @@ resilience4j:
 #logging:
 #  level:
 #    io.github.resilience4j: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-components: always
+      show-details: always
+      probes:
+        enabled: true
