@@ -33,6 +33,7 @@ repositories {
 
 ext {
     set('springCloudVersion', "2025.1.2")
+    set('otelVersion', '2.29.0')
 }
 
 dependencyManagement {
@@ -52,6 +53,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'io.github.resilience4j:resilience4j-micrometer'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    runtimeOnly "io.opentelemetry.javaagent:opentelemetry-javaagent:${otelVersion}"
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
