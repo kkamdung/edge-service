@@ -40,12 +40,14 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
-      - name: Install kubeconform
+      - name: Install tools
+        uses: alexellis/arkade-get@master
+        with:
+          kustomize: latest
+          kubeconform: latest
+      - name: Generate manifests
         run: |
-          curl -L https://github.com/yannh/kubeconform/releases/latest\
-          /download/kubeconform-linux-amd64.tar.gz \
-            | tar xz
-          sudo mv kubeconform /usr/local/bin/
+          kustomize build k8s > build-output.yml
       - name: Validate manifests
         run: |
           kubeconform \
@@ -53,7 +55,7 @@ jobs:
             -ignore-missing-schemas \
             -summary \
             -output json \
-            k8s/*.yml
+            build-output.yml
   package:
     name: Package and Publish
     if: ${{ github.ref == 'refs/heads/main' }}
