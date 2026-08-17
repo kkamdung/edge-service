@@ -51,3 +51,16 @@ spring:
                 - name: CircuitBreaker
                   args:
                     name: orderCircuitBreaker
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 20
+        failure-rate-threshold: 50
+        permitted-number-of-calls-in-half-open-state: 5
+        wait-duration-in-open-state: 15000
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 5s
