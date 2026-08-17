@@ -10,12 +10,24 @@ spring:
     name: edge-service
   lifecycle:
     timeout-per-shutdown-phase: 15s
+  config:
+    import: "optional:configserver:"
   cloud:
+    config:
+      uri: http://localhost:8888
+      request-connect-timeout: 5000 # 5s
+      request-read-timeout: 5000 # 5s
+      fail-fast: false # In production, set to true
+      retry:
+        max-attempts: 6
+        initial-interval: 1000 # 1s
+        max-interval: 2000 # 2s
+        multiplier: 1.1
     gateway:
       server:
         webflux:
           httpclient:
-            connect-timeout: 2000
+            connect-timeout: 2000 # 2s
             response-timeout: 5s
             pool:
               type: elastic
@@ -37,7 +49,7 @@ spring:
                 exceptions: java.io.IOException, java.util.concurrent.TimeoutException
                 backoff:
                   firstBackoff: 50ms
-                  maxBackoff: 500ms
+                  maxBackOff: 500ms
                   factor: 2
                   basedOnPreviousValue: false
           routes:
