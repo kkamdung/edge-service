@@ -63,6 +63,11 @@ spring:
       host: localhost
       port: 6379
       timeout: 1s
+  session:
+    timeout: 10m
+    data:
+      redis:
+        namespace: polar:edge
 
 resilience4j:
   circuitbreaker:
